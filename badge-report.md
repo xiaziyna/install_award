@@ -2,4 +2,4 @@
 
 | Repo | Status | Badge |
 | --- | --- | --- |
-| https://github.com/xiaziyna/screen-paws.git | PASS | ![badge](https://raw.githubusercontent.com/xiaziyna/install_award/main/badges/xiaziyna__screen-paws.json) |
+| https://github.com/xiaziyna/screen-paws.git | PASS | ![badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fxiaziyna%2Finstall_award%2Fmain%2Fbadges%2Fxiaziyna__screen-paws.json) |
