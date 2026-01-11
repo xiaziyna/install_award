@@ -1,0 +1,42 @@
+name: Verify student packages
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Verify repos
+        run: |
+          set +e
+          python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report badge-report.md --badge-base-url "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/badges"
+          echo $? > .verify_exit
+          exit 0
+
+      - name: Commit badge updates
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            git config user.name "badge-bot"
+            git config user.email "badge-bot@users.noreply.github.com"
+            git add badges results.json badge-report.md
+            git commit -m "Update badges"
+            git push
+          else
+            echo "No changes to commit"
+          fi
+
+      - name: Set job status
+        run: |
+          exit $(cat .verify_exit)
