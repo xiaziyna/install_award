@@ -19,13 +19,13 @@ python scripts/verify_repos.py --repos repos.txt --badges badges --results resul
 Optional report output with badge URLs:
 
 ```bash
-python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report badge-report.md --badge-base-url https://raw.githubusercontent.com/<YOUR_ORG>/<YOUR_REPO>/main/badges
+python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report hall-of-fame.md --badge-base-url https://raw.githubusercontent.com/<YOUR_ORG>/<YOUR_REPO>/main/badges
 ```
 
 3) Each repo gets a badge JSON in `badges/`. Use shields.io to render it:
 
 ```
-https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/<YOUR_ORG>/<YOUR_REPO>/main/badges/<owner>__<repo>.json
+https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/<YOUR_ORG>/<YOUR_REPO>/main/badges/<owner>__<repo>.json&style=flat-square
 ```
 
 ## What is checked
@@ -39,14 +39,4 @@ https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/<YOUR_ORG>
 
 See `.github/workflows/verify.yml` for the automated workflow that runs the verifier and commits badge JSON files back to this repo.
 
-The workflow also writes `badge-report.md` with clickable badge previews.
-
-## Comment automation
-
-To post a badge comment on each student repo, add a repo-scoped token as a GitHub Actions secret:
-
-- Create a classic PAT with `repo` scope (or fine-grained token with access to the student repos).
-- In this repo, set `Settings → Secrets and variables → Actions → New repository secret`.
-- Name it `REPO_COMMENT_TOKEN`.
-
-The workflow will create or reuse an issue titled `Package Verification Badge` in each student repo and post the badge as a comment.
+The workflow also writes `hall-of-fame.md` with clickable badge previews.
