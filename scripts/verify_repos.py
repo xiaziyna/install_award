@@ -103,12 +103,9 @@ def write_badge(badges_dir: Path, repo_url: str, ok: bool) -> Path:
     status_message = "verified" if ok else "failed"
     payload = {
         "schemaVersion": 1,
-        "label": "python package",
+        "label": "package",
         "message": status_message,
         "color": "brightgreen" if ok else "red",
-        "labelColor": "2b3a42",
-        "logo": "python",
-        "logoColor": "white",
     }
     badge_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     return badge_path
@@ -155,20 +152,127 @@ def write_report(
     results: List[RepoResult],
     badge_base_url: str,
 ) -> None:
-    lines = [
-        "# Hall of Fame",
-        "",
-        "Verified Python packages and their badges.",
-        "",
-        "| Repo | Status | Badge |",
-        "| --- | --- | --- |",
-    ]
+    cards = []
     for result in results:
         badge_url = shields_badge_url(badge_base_url, result.url)
         status = "PASS" if result.ok else "FAIL"
-        badge_md = f"![badge]({badge_url})"
-        lines.append(f"| {result.url} | {status} | {badge_md} |")
-    report_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        cards.append(
+            "\n".join(
+                [
+                    "<article class=\"card\">",
+                    f"  <a class=\"repo\" href=\"{result.url}\">{result.url}</a>",
+                    f"  <div class=\"status {status.lower()}\">{status}</div>",
+                    f"  <img class=\"badge\" src=\"{badge_url}\" alt=\"badge\" />",
+                    "</article>",
+                ]
+            )
+        )
+
+    html = "\n".join(
+        [
+            "<!doctype html>",
+            "<html lang=\"en\">",
+            "<head>",
+            "  <meta charset=\"utf-8\" />",
+            "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />",
+            "  <title>Hall of Fame</title>",
+            "  <style>",
+            "    :root {",
+            "      --bg-1: #ffe8d6;",
+            "      --bg-2: #cce3de;",
+            "      --ink: #1f2933;",
+            "      --accent: #ff6b6b;",
+            "      --accent-2: #3d5a80;",
+            "      --card: #ffffff;",
+            "      --shadow: rgba(31, 41, 51, 0.12);",
+            "    }",
+            "    * { box-sizing: border-box; }",
+            "    body {",
+            "      margin: 0;",
+            "      font-family: \"Trebuchet MS\", \"Gill Sans\", \"DejaVu Sans\", sans-serif;",
+            "      color: var(--ink);",
+            "      background: radial-gradient(circle at top left, var(--bg-1), transparent 60%),",
+            "                  radial-gradient(circle at bottom right, var(--bg-2), transparent 55%),",
+            "                  linear-gradient(135deg, #fef9ef, #f4f1de);",
+            "      min-height: 100vh;",
+            "    }",
+            "    header {",
+            "      padding: 48px 24px 24px;",
+            "      text-align: center;",
+            "    }",
+            "    h1 {",
+            "      margin: 0 0 8px;",
+            "      font-size: clamp(2rem, 4vw, 3.2rem);",
+            "      letter-spacing: 0.02em;",
+            "    }",
+            "    p.subtitle {",
+            "      margin: 0;",
+            "      font-size: 1.05rem;",
+            "      color: var(--accent-2);",
+            "    }",
+            "    .grid {",
+            "      display: grid;",
+            "      gap: 16px;",
+            "      padding: 16px 24px 64px;",
+            "      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));",
+            "    }",
+            "    .card {",
+            "      background: var(--card);",
+            "      padding: 16px;",
+            "      border-radius: 16px;",
+            "      box-shadow: 0 10px 25px var(--shadow);",
+            "      display: grid;",
+            "      gap: 10px;",
+            "      align-content: start;",
+            "      position: relative;",
+            "      overflow: hidden;",
+            "      animation: floatIn 400ms ease-out both;",
+            "    }",
+            "    .card::after {",
+            "      content: \"\";",
+            "      position: absolute;",
+            "      inset: auto -20% 0;",
+            "      height: 6px;",
+            "      background: linear-gradient(90deg, var(--accent), var(--accent-2));",
+            "    }",
+            "    .repo {",
+            "      text-decoration: none;",
+            "      color: var(--ink);",
+            "      font-weight: 700;",
+            "      word-break: break-word;",
+            "    }",
+            "    .status {",
+            "      font-size: 0.9rem;",
+            "      font-weight: 700;",
+            "      text-transform: uppercase;",
+            "      letter-spacing: 0.08em;",
+            "    }",
+            "    .status.pass { color: #2a9d8f; }",
+            "    .status.fail { color: #e63946; }",
+            "    .badge {",
+            "      width: fit-content;",
+            "      max-width: 100%;",
+            "      height: auto;",
+            "    }",
+            "    @keyframes floatIn {",
+            "      from { transform: translateY(12px); opacity: 0; }",
+            "      to { transform: translateY(0); opacity: 1; }",
+            "    }",
+            "  </style>",
+            "</head>",
+            "<body>",
+            "  <header>",
+            "    <h1>Hall of Fame</h1>",
+            "    <p class=\"subtitle\">Verified Python packages and their badges.</p>",
+            "  </header>",
+            "  <main class=\"grid\">",
+            "\n".join(cards) if cards else "    <p>No repos verified yet.</p>",
+            "  </main>",
+            "</body>",
+            "</html>",
+        ]
+    )
+    report_path.write_text(html + "\n", encoding="utf-8")
 
 
 def main() -> int:

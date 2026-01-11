@@ -19,7 +19,7 @@ python scripts/verify_repos.py --repos repos.txt --badges badges --results resul
 Optional report output with badge URLs:
 
 ```bash
-python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report hall-of-fame.md --badge-base-url https://raw.githubusercontent.com/<YOUR_ORG>/<YOUR_REPO>/main/badges
+python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report docs/index.html --badge-base-url https://raw.githubusercontent.com/<YOUR_ORG>/<YOUR_REPO>/main/badges
 ```
 
 3) Each repo gets a badge JSON in `badges/`. Use shields.io to render it:
@@ -39,4 +39,4 @@ https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/<YOUR_ORG>
 
 See `.github/workflows/verify.yml` for the automated workflow that runs the verifier and commits badge JSON files back to this repo.
 
-The workflow also writes `hall-of-fame.md` with clickable badge previews.
+The workflow also writes `docs/index.html` for a styled Hall of Fame page on GitHub Pages.
