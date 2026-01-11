@@ -21,7 +21,7 @@ jobs:
       - name: Verify repos
         run: |
           set +e
-          python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report hall-of-fame.md --badge-base-url "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/badges"
+          python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report docs/index.md --badge-base-url "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/badges"
           echo $? > .verify_exit
           exit 0
 
@@ -30,7 +30,7 @@ jobs:
           if [[ -n $(git status --porcelain) ]]; then
             git config user.name "badge-bot"
             git config user.email "badge-bot@users.noreply.github.com"
-            git add badges results.json hall-of-fame.md
+            git add badges results.json docs/index.md
             git commit -m "Update badges"
             git push
           else

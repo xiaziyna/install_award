@@ -156,7 +156,9 @@ def write_report(
     badge_base_url: str,
 ) -> None:
     lines = [
-        "# Badge Report",
+        "# Hall of Fame",
+        "",
+        "Verified Python packages and their badges.",
         "",
         "| Repo | Status | Badge |",
         "| --- | --- | --- |",
