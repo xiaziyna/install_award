@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hall of Fame</title>
+  <style>
+    :root {
+      --bg-1: #ffe8d6;
+      --bg-2: #cce3de;
+      --ink: #1f2933;
+      --accent: #ff6b6b;
+      --accent-2: #3d5a80;
+      --card: #ffffff;
+      --shadow: rgba(31, 41, 51, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Gill Sans", "DejaVu Sans", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at top left, var(--bg-1), transparent 60%),
+                  radial-gradient(circle at bottom right, var(--bg-2), transparent 55%),
+                  linear-gradient(135deg, #fef9ef, #f4f1de);
+      min-height: 100vh;
+    }
+    header {
+      padding: 48px 24px 24px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: 0.02em;
+    }
+    p.subtitle {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--accent-2);
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+      padding: 16px 24px 64px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .card {
+      background: var(--card);
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px var(--shadow);
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      position: relative;
+      overflow: hidden;
+      animation: floatIn 400ms ease-out both;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .repo {
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 700;
+      word-break: break-word;
+    }
+    .status {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .status.pass { color: #2a9d8f; }
+    .status.fail { color: #e63946; }
+    .badge {
+      width: fit-content;
+      max-width: 100%;
+      height: auto;
+    }
+    @keyframes floatIn {
+      from { transform: translateY(12px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hall of Fame</h1>
+    <p class="subtitle">Verified Python packages and their badges.</p>
+  </header>
+  <main class="grid">
+<article class="card">
+  <a class="repo" href="https://github.com/xiaziyna/screen-paws.git">https://github.com/xiaziyna/screen-paws.git</a>
+  <div class="status pass">PASS</div>
+  <img class="badge" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fxiaziyna%2Finstall_award%2Fmain%2Fbadges%2Fxiaziyna__screen-paws.json&style=flat-square" alt="badge" />
+</article>
+  </main>
+</body>
+</html>
