@@ -1,6 +1,9 @@
 {
   "schemaVersion": 1,
-  "label": "package",
+  "label": "python package",
   "message": "verified",
-  "color": "brightgreen"
+  "color": "brightgreen",
+  "labelColor": "2b3a42",
+  "logo": "python",
+  "logoColor": "white"
 }
