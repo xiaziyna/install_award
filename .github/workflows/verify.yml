@@ -21,9 +21,15 @@ jobs:
       - name: Verify repos
         run: |
           set +e
-          python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report badge-report.md --badge-base-url "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/badges"
+          EXTRA_ARGS=()
+          if [[ -n "${REPO_COMMENT_TOKEN}" ]]; then
+            EXTRA_ARGS+=(--comment-token "${REPO_COMMENT_TOKEN}" --comment-issue-title "Package Verification Badge")
+          fi
+          python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report badge-report.md --badge-base-url "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/badges" "${EXTRA_ARGS[@]}"
           echo $? > .verify_exit
           exit 0
+        env:
+          REPO_COMMENT_TOKEN: ${{ secrets.REPO_COMMENT_TOKEN }}
 
       - name: Commit badge updates
         run: |

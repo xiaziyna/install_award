@@ -40,3 +40,13 @@ https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/<YOUR_ORG>
 See `.github/workflows/verify.yml` for the automated workflow that runs the verifier and commits badge JSON files back to this repo.
 
 The workflow also writes `badge-report.md` with clickable badge previews.
+
+## Comment automation
+
+To post a badge comment on each student repo, add a repo-scoped token as a GitHub Actions secret:
+
+- Create a classic PAT with `repo` scope (or fine-grained token with access to the student repos).
+- In this repo, set `Settings → Secrets and variables → Actions → New repository secret`.
+- Name it `REPO_COMMENT_TOKEN`.
+
+The workflow will create or reuse an issue titled `Package Verification Badge` in each student repo and post the badge as a comment.
