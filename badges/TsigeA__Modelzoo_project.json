@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
   "label": "package",
-  "message": "failed",
-  "color": "red"
+  "message": "verified",
+  "color": "brightgreen"
 }
