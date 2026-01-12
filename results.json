@@ -1,15 +1,11 @@
 {
-  "generated_at": "2026-01-12T16:48:42.588537+00:00",
+  "generated_at": "2026-01-12T17:00:59.948301+00:00",
   "total": 7,
-  "passed": 4,
+  "passed": 5,
   "failed": [
     {
-      "url": "https://github.com/looongjing/TopicModeling.git",
-      "reason": "pip install -e . failed: ERROR: Ignored the following versions that require a different python version: 1.21.2 Requires-Python >=3.7,<3.11; 1.21.3 Requires-Python >=3.7,<3.11; 1.21.4 Requires-Python >=3.7,<3.11; 1.21.5 Requires-Python >=3.7,<3.11; 1.21.6 Requires-Python >=3.7,<3.11\nERROR: Could not find a version that satisfies the requirement matplotlib.pyplot (from youtube-topic-modeling) (from versions: none)\nERROR: No matching distribution found for matplotlib.pyplot"
-    },
-    {
       "url": "https://github.com/apembere-wq/Simulator.git",
-      "reason": "missing pyproject.toml"
+      "reason": "README.md must include install and usage"
     },
     {
       "url": "https://github.com/sdtemple/zootopia3.git",
