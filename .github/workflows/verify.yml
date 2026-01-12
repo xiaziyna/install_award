@@ -21,7 +21,7 @@ jobs:
       - name: Verify repos
         run: |
           set +e
-          python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report docs/index.html --badge-base-url "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/badges"
+          python scripts/verify_repos.py --repos repos.txt --badges badges --results results.json --report docs/index.html --badge-base-url "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/badges" --allow-failures
           echo $? > .verify_exit
           exit 0
 

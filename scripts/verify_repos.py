@@ -295,6 +295,11 @@ def main() -> int:
     parser.add_argument("--results", required=True, type=Path)
     parser.add_argument("--report", type=Path)
     parser.add_argument("--badge-base-url", type=str)
+    parser.add_argument(
+        "--allow-failures",
+        action="store_true",
+        help="Always exit 0 (still marks failing repos with red badges)",
+    )
     args = parser.parse_args()
 
     repos = read_repo_list(args.repos)
@@ -328,7 +333,10 @@ def main() -> int:
         status = "PASS" if r.ok else "FAIL"
         print(f"{status} {r.url} {r.reason}")
 
-    return 0 if all(r.ok for r in results) else 1
+    all_ok = all(r.ok for r in results)
+    if args.allow_failures:
+        return 0
+    return 0 if all_ok else 1
 
 
 if __name__ == "__main__":
