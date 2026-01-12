@@ -1,3 +1,8 @@
 # Add one GitHub repo URL per line
 # https://github.com/owner/repo
 https://github.com/xiaziyna/screen-paws.git
+https://github.com/xiaosuhu/midas-model-zoo-workshop-python-package.git
+https://github.com/TsigeA/Modelzoo_project.git
+https://github.com/Dr-Nathan-Fox/screen-paws.git
+https://github.com/looongjing/TopicModeling.git
+https://github.com/apembere-wq/Simulator.git
