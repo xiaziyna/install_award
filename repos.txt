@@ -6,3 +6,4 @@ https://github.com/TsigeA/Modelzoo_project.git
 https://github.com/Dr-Nathan-Fox/screen-paws.git
 https://github.com/looongjing/TopicModeling.git
 https://github.com/apembere-wq/Simulator.git
+https://github.com/sdtemple/zootopia3.git
