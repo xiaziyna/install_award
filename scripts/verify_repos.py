@@ -130,7 +130,10 @@ def verify_repo(repo_url: str, work_dir: Path, badges_dir: Path) -> RepoResult:
     if not ok:
         return RepoResult(repo_url, False, reason)
 
-    ok, reason = ensure_readme(repo_dir)
+    try:
+        ok, reason = ensure_readme(repo_dir)
+    except Exception as exc:  # defensive: avoid crashing on unexpected README issues
+        return RepoResult(repo_url, False, f"README check error: {exc}")
     if not ok:
         return RepoResult(repo_url, False, reason)
 
@@ -139,7 +142,10 @@ def verify_repo(repo_url: str, work_dir: Path, badges_dir: Path) -> RepoResult:
     if not ok:
         return RepoResult(repo_url, False, reason)
 
-    ok, reason = install_editable(venv_dir, repo_dir)
+    try:
+        ok, reason = install_editable(venv_dir, repo_dir)
+    except Exception as exc:  # catch unexpected installer crashes
+        return RepoResult(repo_url, False, f"pip install error: {exc}")
     if not ok:
         return RepoResult(repo_url, False, reason)
 
@@ -156,12 +162,13 @@ def write_report(
     for result in results:
         badge_url = shields_badge_url(badge_base_url, result.url)
         status = "PASS" if result.ok else "FAIL"
+        icon = "&#10003;"  # checkmark
         cards.append(
             "\n".join(
                 [
                     "<article class=\"card\">",
                     f"  <a class=\"repo\" href=\"{result.url}\">{result.url}</a>",
-                    f"  <div class=\"status {status.lower()}\">{status}</div>",
+                    f"  <div class=\"status {status.lower()}\"><span class=\"icon\">{icon}</span>{status}</div>",
                     f"  <img class=\"badge\" src=\"{badge_url}\" alt=\"badge\" />",
                     "</article>",
                 ]
@@ -246,9 +253,15 @@ def write_report(
             "      font-weight: 700;",
             "      text-transform: uppercase;",
             "      letter-spacing: 0.08em;",
+            "      display: inline-flex;",
+            "      align-items: center;",
+            "      gap: 6px;",
             "    }",
+            "    .status .icon { font-size: 1.1rem; }",
             "    .status.pass { color: #2a9d8f; }",
+            "    .status.pass .icon { color: #2a9d8f; }",
             "    .status.fail { color: #e63946; }",
+            "    .status.fail .icon { color: #e63946; }",
             "    .badge {",
             "      width: fit-content;",
             "      max-width: 100%;",
